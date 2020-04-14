@@ -7,9 +7,15 @@
   <body>
     <?php 
     require_once("pokeapi.php");
-    $pokemon = $_GET['pokemon-name'];
+    $pokemon_name = $_GET['pokemon-name'];
     session_start();
-    find_pokemon($pokemon);
+    $pokemon = find_pokemon($pokemon_name);
+    if(!$pokemon) {
+      echo "<p>{$pokemon_name} not found :(</p>";
+      return;
+    }
+    echo "<h1>{$pokemon->name}</h1>";
+    echo "<img src='$pokemon->sprite_url' alt='Image of {$pokemon->name}'>";
     ?>
   </body>
 </html>

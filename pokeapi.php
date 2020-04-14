@@ -3,13 +3,13 @@ $url = "https://pokeapi.co/api/v2/";
 
 class pokemon {
   function __construct($name, $sprite, $types, $stats) {
-    $this->name = $name;
+    $this->name = ucfirst($name);
     $this->sprite_url = $sprite;
     $this->types = $types;
     $this->stats = $stats;
   }
-  private $name = "";
-  private $sprite_url = "";
+  public $name = "";
+  public $sprite_url = "";
   private $types = array();
   private $stats = array();
 }
@@ -31,10 +31,10 @@ function find_pokemon($pokemon) {
     array_push($types, $type->{"type"}->{"name"});
   }
 
-  $stats = [];
+  $statz = [];
   foreach($pokemon_details->{"stats"} as $stat) {
-    $stats[$stat->{"stat"}->{"name"}] = $stat->base_stat;
+    $statz[$stat->{"stat"}->{"name"}] = $stat->base_stat;
   }
 
-  return new pokemon($pokemon, $sprite, $types, $stats);
+  return new pokemon($pokemon, $sprite, $types, $statz);
 }
