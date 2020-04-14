@@ -1,6 +1,13 @@
 <?php
 $url = "https://pokeapi.co/api/v2/";
 
+// the type is key and the value represents the types it is weak against
+$types = [
+  "water" => ["grass"],
+  "fire" => ["water"],
+  "grass" => ["fire"]
+];
+
 class pokemon {
   function __construct($name, $sprite, $types, $stats) {
     $this->name = ucfirst($name);
@@ -10,8 +17,9 @@ class pokemon {
   }
   public $name = "";
   public $sprite_url = "";
-  private $types = array();
-  private $stats = array();
+  public $types = array();
+  public $stats = array();
+  public $counters = array();
 }
 
 function check_cache($pokemon) {
@@ -52,5 +60,14 @@ function find_pokemon($pokemon) {
 
   $pokemon_object = new pokemon($pokemon, $sprite, $types, $statz);
   $_SESSION[$pokemon] = $pokemon_object;
+  getCounters($pokemon_object);
   return $pokemon_object;
+}
+
+function getCounters($pokemon) {
+  foreach($pokemon->types as $type) {
+    //echo $type;
+  }
+  $json = file_get_contents("{$url}pokemon/{$pokemon}/");
+  $pokemon_details = json_decode($json);
 }
