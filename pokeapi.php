@@ -14,8 +14,22 @@ class pokemon {
   private $stats = array();
 }
 
+function check_cache($pokemon) {
+  if(isset($_SESSION[$pokemon])) {
+    echo "<p>cached</p>";
+    return $_SESSION[$pokemon];
+  } 
+  echo "<p>not cached</p>";
+  return null;
+}
+
 // call the pokeapi to find given pokemon info and return a pokemon object 
 function find_pokemon($pokemon) {
+  $cached_pokemon = check_cache($pokemon);
+  if($cached_pokemon) {
+    return $cached_pokemon;
+  }
+
   global $url;
   $json = file_get_contents("{$url}pokemon/{$pokemon}/");
   $pokemon_details = json_decode($json);
@@ -36,5 +50,7 @@ function find_pokemon($pokemon) {
     $statz[$stat->{"stat"}->{"name"}] = $stat->base_stat;
   }
 
-  return new pokemon($pokemon, $sprite, $types, $statz);
+  $pokemon_object = new pokemon($pokemon, $sprite, $types, $statz);
+  $_SESSION[$pokemon] = $pokemon_object;
+  return $pokemon_object;
 }
