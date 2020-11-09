@@ -20,6 +20,10 @@ class pokemon {
   public $types = array();
   public $stats = array();
   public $counters = array();
+
+  public function __toString() {
+    return $this->name;
+  }
 }
 
 function check_cache($pokemon) {
@@ -39,7 +43,7 @@ function find_pokemon($pokemon) {
   }
 
   global $url;
-  $json = file_get_contents("{$url}pokemon/{$pokemon}/");
+  $json = @file_get_contents("{$url}pokemon/{$pokemon}/");
   $pokemon_details = json_decode($json);
 
   // if pokemon is not found return null
@@ -65,9 +69,10 @@ function find_pokemon($pokemon) {
 }
 
 function getCounters($pokemon) {
+  global $url;
   foreach($pokemon->types as $type) {
     //echo $type;
   }
-  $json = file_get_contents("{$url}pokemon/{$pokemon}/");
+  $json = @file_get_contents("{$url}pokemon/{$pokemon->name}/");
   $pokemon_details = json_decode($json);
 }

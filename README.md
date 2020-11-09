@@ -4,4 +4,4 @@ Battle boi is a tool that helps find the most effective counter Pokemon for a ba
 
 ## Setup 
 
-Run the server: php -S localhost:4567
+Run the server: php -S localhost:8000
