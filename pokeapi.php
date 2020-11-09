@@ -28,10 +28,12 @@ class pokemon {
 
 function check_cache($pokemon) {
   if(isset($_SESSION[$pokemon])) {
-    echo "<p>cached</p>";
+    $str = "cached " . $pokemon . "\n";
+    error_log($str, 3, 'logs/errors.log');
     return $_SESSION[$pokemon];
   } 
-  echo "<p>not cached</p>";
+  $str = "not cached " . $pokemon . "\n";
+  error_log($str, 3, 'logs/errors.log');
   return null;
 }
 
